@@ -13,6 +13,14 @@ export function TodoList(props: TodoListProps & { className: string }) {
     });
   };
 
+  const handleDelete = (todo: Todo) => {
+    setTodos((_todos) => {
+      return _todos.filter((_todo) => {
+        return _todo.description !== todo.description;
+      });
+    });
+  };
+
   return (
     <ul className={props.className}>
       {todos.map((todo) => {
@@ -29,6 +37,13 @@ export function TodoList(props: TodoListProps & { className: string }) {
             ) : (
               <span>{todo.description}</span>
             )}
+            <button
+              onClick={() => handleDelete(todo)}
+              className="ml-2"
+              type="button"
+            >
+              x
+            </button>
           </li>
         );
       })}
