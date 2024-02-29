@@ -1,29 +1,24 @@
-import type { Todo, TodoListProps } from "../types.ts";
+import type { Todo } from "../types.ts";
+import { todos } from "./todo-state.ts";
 
-export function TodoList(props: TodoListProps & { className: string }) {
-  const [todos, setTodos] = props.todoState;
-
+export function TodoList(props: { className: string }) {
   const handleChecked = (todo: Todo) => {
-    setTodos((_todos) => {
-      return _todos.map((_todo) => {
-        if (_todo.description === todo.description)
-          return { ...todo, done: !todo.done };
-        return _todo;
-      });
+    todos.value = todos.value.map((_todo) => {
+      if (_todo.description === todo.description)
+        return { ...todo, done: !todo.done };
+      return _todo;
     });
   };
 
   const handleDelete = (todo: Todo) => {
-    setTodos((_todos) => {
-      return _todos.filter((_todo) => {
-        return _todo.description !== todo.description;
-      });
+    todos.value = todos.value.filter((_todo) => {
+      return _todo.description !== todo.description;
     });
   };
 
   return (
     <ul className={props.className}>
-      {todos.map((todo) => {
+      {todos.value.map((todo) => {
         return (
           <li>
             <input

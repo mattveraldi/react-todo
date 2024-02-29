@@ -1,14 +1,12 @@
 import { FormEvent } from "react";
-import { TodoListProps } from "../types";
+import { todos } from "./todo-state";
 
-export function TodoForm(props: TodoListProps & { className: string }) {
-  const [todos, setTodos] = props.todoState;
-
+export function TodoForm(props: { className: string }) {
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
     const description = formData.get("description") as string;
-    setTodos([...todos, { description, done: false }]);
+    todos.value = [...todos.value, { description, done: false }];
   }
 
   return (
